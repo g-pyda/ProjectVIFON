@@ -139,7 +139,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Food.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ShopObject.cpp" />
+    <ClCompile Include="WorldMap.cpp" />
+    <ClCompile Include="WorldObject.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dormTEX.h" />
+    <ClInclude Include="Food.h" />
+    <ClInclude Include="constants.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="ShopObject.h" />
+    <ClInclude Include="WorldMap.h" />
+    <ClInclude Include="WorldObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
