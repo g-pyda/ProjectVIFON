@@ -13,16 +13,16 @@ bool is_colliding_bottom(sf::Sprite, sf::RectangleShape);
 int main() {
     sf::RenderWindow window(sf::VideoMode(windowWidth,windowHeight), "Texture generating testing!");
     sf::Texture avatarTEX, dormTEX;
-    sf::View gameplayView;
+    sf::View gameplayView(sf::FloatRect(0, 0, windowWidth, windowHeight));
 
 
     if (!avatarTEX.loadFromFile("../Graphics/avatar.png"))
         std::cout << "Avatar didn't load" << std::endl;
     sf::Sprite avatar;
     avatar.setTexture(avatarTEX);
-    avatar.setOrigin(-400, -150);
+    avatar.setOrigin( -int(windowWidth/2), -int(windowHeight/2));
 
-    WorldMap dormMAP(sf::Vector2u(defTileSize, defTileSize), dormTEXscheme, windowWidth/defTileSize, windowHeight/defTileSize, dormTEXadress);
+    WorldMap dormMAP(sf::Vector2u(defTileSize, defTileSize), dormTEXscheme, dormWIDTH, dormHEIGHT, dormTEXadress);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -32,42 +32,71 @@ int main() {
             else if(event.type == sf::Event::KeyPressed) {
                 switch (event.key.code) {
                 case sf::Keyboard::W:
-                    avatar.move(sf::Vector2f(0, -2));
+                    gameplayView.move(sf::Vector2f(0, -5));
+                    avatar.move(sf::Vector2f(0, -5));
+                    while (dormMAP.is_colliding_top(&avatar)) {
+                        std::cout << "top" << std::endl;
+                        avatar.move(sf::Vector2f(0, 1));
+                        gameplayView.move(sf::Vector2f(0, 1));
+                    }
                     break;
                 case sf::Keyboard::S:
-                    avatar.move(sf::Vector2f(0, 2));
+                    gameplayView.move(sf::Vector2f(0, 5));
+                    avatar.move(sf::Vector2f(0, 5));
+                    while (dormMAP.is_colliding_bottom(&avatar)) {
+                        std::cout << "bottom" << std::endl;
+                        avatar.move(sf::Vector2f(0, -1));
+                        gameplayView.move(sf::Vector2f(0, -1));
+                    }
                     break;
                 case sf::Keyboard::A:
-                    avatar.move(sf::Vector2f(-2, 0));
+                    gameplayView.move(sf::Vector2f(-5, 0));
+                    avatar.move(sf::Vector2f(-5, 0));
+                    while (dormMAP.is_colliding_left(&avatar)) {
+                        std::cout << "left" << std::endl;
+                        avatar.move(sf::Vector2f(1, 0));
+                        gameplayView.move(sf::Vector2f(1, 0));
+                    }
                     break;
                 case sf::Keyboard::D:
-                    avatar.move(sf::Vector2f(2, 0));
+                    gameplayView.move(sf::Vector2f(5, 0));
+                    avatar.move(sf::Vector2f(5, 0));
+                    while (dormMAP.is_colliding_right(&avatar)) {
+                        std::cout << "right" << std::endl;
+                        avatar.move(sf::Vector2f(-1, 0));
+                        gameplayView.move(sf::Vector2f(-1, 0));
+                    }
                     break;
                 default:
                     break;
                 }
 
-                //checking for the collisions
+                //checking for the additional collisions
                 while (dormMAP.is_colliding_top(&avatar)) {
                     std::cout << "top" << std::endl;
                     avatar.move(sf::Vector2f(0, 1));
+                    gameplayView.move(sf::Vector2f(0, 1));
                 }
                 while (dormMAP.is_colliding_bottom(&avatar)) {
                     std::cout << "bottom" << std::endl;
                     avatar.move(sf::Vector2f(0, -1));
+                    gameplayView.move(sf::Vector2f(0, -1));
                 }
                 while (dormMAP.is_colliding_right(&avatar)) {
                     std::cout << "right" << std::endl;
                     avatar.move(sf::Vector2f(-1, 0));
+                    gameplayView.move(sf::Vector2f(-1, 0));
                 }
                 while (dormMAP.is_colliding_left(&avatar)) {
                     std::cout << "left" << std::endl;
                     avatar.move(sf::Vector2f(1, 0));
+                    gameplayView.move(sf::Vector2f(1, 0));
                 }
             }
         }
 
         window.clear();
+        window.setView(gameplayView);
         window.draw(dormMAP);
         window.draw(avatar);
         window.display();
