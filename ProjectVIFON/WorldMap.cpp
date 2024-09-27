@@ -11,24 +11,24 @@ bool WorldMap::load(const std::string& texture) {
 }
 
 // default constructor
-WorldMap::WorldMap(sf::Vector2u tileSize, const int* tiles, unsigned int Wwidth, unsigned int Wheight, const std::string& texture) {
-    this->height = Wheight;
-    this->width = Wwidth;
-    this->tilesScheme = tiles;
+WorldMap::WorldMap(sf::Vector2u tileSize, Config config) {
+    this->height = config.getHeight();
+    this->width = config.getWidth();
+    this->tilesScheme = config.getTEXscheme();
     this->tileSize = tileSize;
-    if (!this->load(texture))
+    if (!this->load(config.getBackgroundTEX()))
         std::cout << "Texture didn't load!" << std::endl;
 
     // resize the vertex array to fit the level size
     this->tileArray.setPrimitiveType(sf::Triangles);
-    this->tileArray.resize(Wwidth * Wheight * 6);
+    this->tileArray.resize(width * height * 6);
     
     // populate the vertex array, with two triangles per tile
-    for (unsigned int i = 0; i < Wwidth; ++i)
-        for (unsigned int j = 0; j < Wheight; ++j)
+    for (unsigned int i = 0; i < width; ++i)
+        for (unsigned int j = 0; j < height; ++j)
         {
             // get the current tile number
-            int tileNumber = tiles[i + j * width];
+            int tileNumber = tilesScheme[i + j * width];
 
             // find its position in the tileset texture
             int tu = tileNumber % (this->texture.getSize().x / tileSize.x);
@@ -81,7 +81,6 @@ bool WorldMap::is_colliding_left(sf::Sprite* sprite) {
                 (tileNumber >= 14 || (tileNumber <= 9 && tileNumber >= 4))) {
                 //checking the texture
                 if (sh_size.intersects(sp_size)) {
-                    std::cout << i << "," << j << std::endl;
                     return true;
                 }
             }
@@ -101,7 +100,6 @@ bool WorldMap::is_colliding_right(sf::Sprite* sprite) {
             if (sp_size.left + sp_size.width < sh_size.left + sh_size.width && 
                 (tileNumber >= 14 || (tileNumber <= 9 && tileNumber >= 4))) {
                 if (sh_size.intersects(sp_size)) {
-                    std::cout << i << "," << j << std::endl;
                     return true;
                 }
             }
@@ -120,7 +118,6 @@ bool WorldMap::is_colliding_top(sf::Sprite* sprite) {
             if (sp_size.top > sh_size.top && 
                 (tileNumber >= 14 || (tileNumber <= 9 && tileNumber >= 4))) {
                 if (sh_size.intersects(sp_size)) {
-                    std::cout << i << "," << j << std::endl;
                     return true;
                 }
             }
@@ -140,7 +137,6 @@ bool WorldMap::is_colliding_bottom(sf::Sprite* sprite) {
             if (sp_size.top + sp_size.height < sh_size.top + sh_size.height && 
                 (tileNumber >= 14 || (tileNumber <= 9 && tileNumber >= 4))) {
                 if (sh_size.intersects(sp_size)) {
-                    std::cout << i << "," << j << std::endl;
                     return true;
                 }
             }
