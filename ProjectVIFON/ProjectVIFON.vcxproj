@@ -144,6 +144,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ShopObject.cpp" />
+    <ClCompile Include="TextureFinder.cpp" />
     <ClCompile Include="WorldMap.cpp" />
     <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShopObject.h" />
+    <ClInclude Include="TextureFinder.h" />
     <ClInclude Include="WorldMap.h" />
     <ClInclude Include="WorldObject.h" />
   </ItemGroup>

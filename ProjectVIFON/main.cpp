@@ -21,7 +21,7 @@ int main() {
     avatar.setTexture(avatarTEX);
     avatar.setPosition( windowWidth/2.0f, windowHeight/2.0f);
 
-    const Config dormConfig(32, 50, "../Graphics/Background/dormBackgroundTEX.png", "../Graphics/Movable/dormFurnitureTEX.png", dormTEXscheme);
+    const Config dormConfig(32, 50, "../Graphics/Background/dormBackgroundTEX.png", "../Graphics/Movable/dormFurnitureTEX.png", dormTEXscheme, dormMovableObj);
     WorldMap dormMAP(sf::Vector2u(defTileSize, defTileSize), dormConfig);
 
     while (window.isOpen()) {
@@ -39,7 +39,6 @@ int main() {
             gameplayView.move(sf::Vector2f(0, -vel));
             avatar.move(sf::Vector2f(0, -vel));
             while (dormMAP.is_colliding_top(&avatar)) {
-                std::cout << "top" << std::endl;
                 avatar.move(sf::Vector2f(0, vel));
                 gameplayView.move(sf::Vector2f(0, vel));
             }
@@ -48,7 +47,6 @@ int main() {
             gameplayView.move(sf::Vector2f(0, vel));
             avatar.move(sf::Vector2f(0, vel));
             while (dormMAP.is_colliding_bottom(&avatar)) {
-                std::cout << "bottom" << std::endl;
                 avatar.move(sf::Vector2f(0, -vel));
                 gameplayView.move(sf::Vector2f(0, -vel));
             }
@@ -57,7 +55,6 @@ int main() {
             gameplayView.move(sf::Vector2f(-vel, 0));
             avatar.move(sf::Vector2f(-vel, 0));
             while (dormMAP.is_colliding_left(&avatar)) {
-                std::cout << "left" << std::endl;
                 avatar.move(sf::Vector2f(vel, 0));
                 gameplayView.move(sf::Vector2f(vel, 0));
             }
@@ -66,7 +63,6 @@ int main() {
             gameplayView.move(sf::Vector2f(vel, 0));
             avatar.move(sf::Vector2f(vel, 0));
             while (dormMAP.is_colliding_right(&avatar)) {
-                std::cout << "right" << std::endl;
                 avatar.move(sf::Vector2f(-vel, 0));
                 gameplayView.move(sf::Vector2f(-vel, 0));
             }
@@ -78,22 +74,18 @@ int main() {
         }
     //checking for the additional collisions
     while (dormMAP.is_colliding_top(&avatar)) {
-        std::cout << "top" << std::endl;
         avatar.move(sf::Vector2f(0, vel));
         gameplayView.move(sf::Vector2f(0, vel));
     }
     while (dormMAP.is_colliding_bottom(&avatar)) {
-        std::cout << "bottom" << std::endl;
         avatar.move(sf::Vector2f(0, -vel));
         gameplayView.move(sf::Vector2f(0, -vel));
     }
     while (dormMAP.is_colliding_right(&avatar)) {
-        std::cout << "right" << std::endl;
         avatar.move(sf::Vector2f(-vel, 0));
         gameplayView.move(sf::Vector2f(-vel, 0));
     }
     while (dormMAP.is_colliding_left(&avatar)) {
-        std::cout << "left" << std::endl;
         avatar.move(sf::Vector2f(vel, 0));
         gameplayView.move(sf::Vector2f(vel, 0));
     }

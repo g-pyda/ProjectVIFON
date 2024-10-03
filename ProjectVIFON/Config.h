@@ -3,16 +3,20 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <vector>
+#include "WorldObject.h"
 
 // class responsible for configuration of the map 
 class Config {
 public:
-	Config(unsigned int width, unsigned int height, const std::string& backgroundTEX, const std::string& movableTEX, const int TEXscheme[]);
+    // constructor
+	Config(unsigned int width, unsigned int height, const std::string& backgroundTEX, const std::string& movableTEX, const int TEXscheme[], const std::vector <WorldObject> MovableScheme);
     unsigned int getWidth() const;
     unsigned int getHeight() const;
     std::string getBackgroundTEX() const;
     std::string getMovableTEX() const;
     const int* getTEXscheme() const;
+    const std::vector <WorldObject> getMovableObjScheme() const;
 
 private:
     // size of the map
@@ -21,9 +25,10 @@ private:
     std::string backgroundTEX;
     std::string movableTEX;
     const int* TEXscheme;
+    std::vector <WorldObject> movableObjectsScheme;
 };
 
-//dorm - scheme of the tiles' placement 
+//dorm - scheme of the tiles' placement and movable objects 
 static const int dormTEXscheme[] = {
     10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 17, 15,  4,  5, 22, 22,  4,  5, 15, 19, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
     10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 14, 13, 13, 13, 14, 14, 13, 13, 13, 14, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
@@ -76,3 +81,20 @@ static const int dormTEXscheme[] = {
     10, 10, 10, 10, 10, 10, 10, 10, 10, 14, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 14, 10, 10, 10, 10, 10, 10, 10, 10, 10,
     10, 10, 10, 10, 10, 10, 10, 10, 10, 16, 15, 15, 15,  4,  8,  8,  8,  8,  5, 15, 15, 15, 18, 10, 10, 10, 10, 10, 10, 10, 10, 10,
 };
+
+// array representing the movable objects
+// 1 dim - objects ID
+// 2 dim - data:
+//  0 - name
+//  1 - left coordinate
+//  2 - top coordinate
+static const std::vector <WorldObject> dormMovableObj = {
+    WorldObject(Bed, sf::Vector2f(1 * defTileSize, 5 * defTileSize), 0),
+    WorldObject(Bed, sf::Vector2f(1 * defTileSize, 11 * defTileSize), 0),
+    WorldObject(Closet, sf::Vector2f(7 * defTileSize, 5 * defTileSize), 0),
+    WorldObject(Closet, sf::Vector2f(7 * defTileSize, 11 * defTileSize), 2),
+    WorldObject(Desk, sf::Vector2f(1 * defTileSize, 9 * defTileSize), 1),
+    WorldObject(Desk, sf::Vector2f(1 * defTileSize, 7 * defTileSize), 1),
+
+};
+//{int(Bed), 1, 5}, {Bed, 1, 11}, {Desk, 1, 7}, {Desk, 1, 9}, {Closet, 7, 5}, {Closet, 7, 11}
