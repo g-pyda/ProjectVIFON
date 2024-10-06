@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -143,6 +143,7 @@
     <ClCompile Include="Food.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SaveData.cpp" />
     <ClCompile Include="ShopObject.cpp" />
     <ClCompile Include="TextureFinder.cpp" />
     <ClCompile Include="WorldMap.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="constants.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SaveData.h" />
     <ClInclude Include="ShopObject.h" />
     <ClInclude Include="TextureFinder.h" />
     <ClInclude Include="WorldMap.h" />

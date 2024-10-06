@@ -9,14 +9,18 @@
 // class responsible for configuration of the map 
 class Config {
 public:
-    // constructor
-	Config(unsigned int width, unsigned int height, const std::string& backgroundTEX, const std::string& movableTEX, const int TEXscheme[], const std::vector <WorldObject> MovableScheme);
+    // constructors
+    Config();
+	Config(unsigned int width, unsigned int height, const std::string& backgroundTEX, const std::string& movableTEX,
+        const int TEXscheme[], const std::vector <WorldObject> MovableScheme, sf::Vector2f playerCoords);
     unsigned int getWidth() const;
     unsigned int getHeight() const;
     std::string getBackgroundTEX() const;
     std::string getMovableTEX() const;
     const int* getTEXscheme() const;
     const std::vector <WorldObject> getMovableObjScheme() const;
+    sf::Vector2f getPlayerCoord() const;
+    Config operator=(const Config& another);
 
 private:
     // size of the map
@@ -26,6 +30,7 @@ private:
     std::string movableTEX;
     const int* TEXscheme;
     std::vector <WorldObject> movableObjectsScheme;
+    sf::Vector2f playerCoord;
 };
 
 //dorm - scheme of the tiles' placement and movable objects 

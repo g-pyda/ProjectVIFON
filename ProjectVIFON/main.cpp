@@ -5,6 +5,7 @@
 #include "dormTEX.h"
 #include "WorldMap.h"
 #include "constants.h"
+#include "SaveData.h"
 
 
 int main() {
@@ -14,6 +15,8 @@ int main() {
     sf::Texture avatarTEX, dormTEX;
     sf::View gameplayView(sf::FloatRect(0, 0, windowWidth, windowHeight));
 
+    SaveData newSave;
+    WorldMap dormMAP(sf::Vector2u(defTileSize, defTileSize), newSave.getDormConfig());
 
     if (!avatarTEX.loadFromFile("../Graphics/avatar.png"))
         std::cout << "Avatar didn't load" << std::endl;
@@ -21,8 +24,6 @@ int main() {
     avatar.setTexture(avatarTEX);
     avatar.setPosition( windowWidth/2.0f, windowHeight/2.0f);
 
-    const Config dormConfig(32, 50, "../Graphics/Background/dormBackgroundTEX.png", "../Graphics/Movable/dormFurnitureTEX.png", dormTEXscheme, dormMovableObj);
-    WorldMap dormMAP(sf::Vector2u(defTileSize, defTileSize), dormConfig);
 
     while (window.isOpen()) {
         // getting timestamp
