@@ -20,7 +20,7 @@ public:
     const int* getTEXscheme() const;
     const std::vector <WorldObject> getMovableObjScheme() const;
     sf::Vector2f getPlayerCoord() const;
-    Config operator=(const Config& another);
+    void operator=(const Config& another);
 
 private:
     // size of the map

@@ -45,7 +45,7 @@ sf::Vector2f Config::getPlayerCoord() const {
 	return playerCoord;
 }
 
-Config Config::operator=(const Config& another) {
+void Config::operator=(const Config& another) {
 	this->width = another.getWidth();
 	this->height = another.getHeight();
 	this->backgroundTEX = another.getBackgroundTEX();

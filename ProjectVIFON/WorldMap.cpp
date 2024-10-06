@@ -4,14 +4,16 @@
 bool WorldMap::load(const std::string& backTexture, const std::string& movTexture) {
     // load the background tileset texture
     sf::Texture worldTEX;
-    if (!worldTEX.loadFromFile(backTexture))
+    if (!worldTEX.loadFromFile(backTexture)) {
         std::cout << "Background" << std::endl;
         return false;
+    }
     this->texture = worldTEX;
     // load the movable tileset texture
-    if (!worldTEX.loadFromFile(movTexture))
+    if (!worldTEX.loadFromFile(movTexture)) {
         std::cout << "Movable" << std::endl;
         return false;
+    }
     this->objtexture = worldTEX;
     return true;
 }

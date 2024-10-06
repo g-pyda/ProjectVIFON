@@ -7,20 +7,22 @@ SaveData::SaveData() {
 	records.open("../Saves/save_0.txt");
 	std::vector <std::string> record_lines;
 	std::string temp;
-	int i = 0;
-	do {
-		getline(records, temp); //filling our string vector with the content of ith line of .txt file
-		if (records.eof()) break;
-		record_lines.push_back(temp);
-	} while (!temp.empty() && ++i);
-	records.close();
+	if (records.is_open()) {
+		while (std::getline(records, temp)) {
+			record_lines.push_back(temp);  // Add each line to the vector
+		}
+		records.close();
+	}
+	else {
+		std::cerr << "Unable to open file." << std::endl;
+	}
 
 	map section = map(-1);
 	bool rendD = false, mapD = false, mapSize = false, objectsD = false, sect_end = true;
 
 	// variables to store temporarily the components of the configuration
-	unsigned int TEMPwidth; 
-	unsigned int TEMPheight; 
+	unsigned int TEMPwidth = 0; 
+	unsigned int TEMPheight = 0; 
 	std::vector <int> TEMPTEXscheme;
 	std::vector <WorldObject> TEMPMovableScheme;
 	sf::Vector2f TEMPplayerCoords;
@@ -28,25 +30,25 @@ SaveData::SaveData() {
 	for (int i = 0; i < record_lines.size(); i++) {
 		// starting the rendering the section of the file 
 		// (specifies which map is rendered)
-		if (record_lines[i][0] == char("/") && record_lines[i][2] == char("/") && sect_end) {
+		if (record_lines[i][0] == '/' && record_lines[i][2] == '/' && sect_end) {
 			sect_end = !sect_end;
-			section = map(int(record_lines[i][1]));
+			section = map(int(record_lines[i][1] - '0'));
 			std::cout << "Rendering the map " << int(section) << std::endl;
 			continue;
 		}
 		// ending the rendering the section of the file 
-		else if (record_lines[i][0] == char("/") && record_lines[i][2] == char("/") && !sect_end) {
+		else if (record_lines[i][0] == '/' && record_lines[i][2] == '/' && !sect_end) {
 			sect_end = !sect_end;
 			int texSize = TEMPTEXscheme.size();
 			int TEMPTEXscheme2[MAXwidth * MAXheight];
-			for (int i = 0; i < TEMPTEXscheme.size(); i++) {
-				std::cout << TEMPTEXscheme[i] << ", ";
-				if ((i+1)%TEMPwidth==0)
+			for (int j = 0; j < TEMPTEXscheme.size(); j++) {
+				std::cout << TEMPTEXscheme[j] << ", ";
+				if ((j+1)%TEMPwidth==0)
 					std::cout << std::endl;
+				TEMPTEXscheme2[j] = TEMPTEXscheme[j];
 			}
-				TEMPTEXscheme2[i] = TEMPTEXscheme[i];
-			switch (int(section)) {
-				case int(dorm) :
+			switch (section) {
+				case dorm:
 					Config TEMPconfig(TEMPwidth, TEMPheight, "../Graphics/Background/dormBackgroundTEX.png", "../Graphics/Movable/dormFurnitureTEX.png", TEMPTEXscheme2, TEMPMovableScheme, TEMPplayerCoords);
 					dormConfig = TEMPconfig;
 					break;
@@ -178,7 +180,7 @@ SaveData::SaveData() {
 			temp.erase();
 			
 			//adding the new object to the vector
-			TEMPMovableScheme.push_back(WorldObject(movableObject(name), sf::Vector2f(corX, corY), rot));
+			TEMPMovableScheme.push_back(WorldObject(movableObject(name), sf::Vector2f(corX*defTileSize, corY*defTileSize), rot));
 			std::cout << "Object rendered correctly" << std::endl;
 			continue;
 		}
