@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 static constexpr unsigned int MAXwidth = 300;
 static constexpr unsigned int MAXheight = 300;
