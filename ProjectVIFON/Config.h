@@ -94,12 +94,12 @@ static const int dormTEXscheme[] = {
 //  1 - left coordinate
 //  2 - top coordinate
 static const std::vector <WorldObject> dormMovableObj = {
-    WorldObject(Bed, sf::Vector2f(1 * defTileSize, 5 * defTileSize), 0),
-    WorldObject(Bed, sf::Vector2f(1 * defTileSize, 11 * defTileSize), 0),
-    WorldObject(Closet, sf::Vector2f(7 * defTileSize, 5 * defTileSize), 0),
-    WorldObject(Closet, sf::Vector2f(7 * defTileSize, 11 * defTileSize), 2),
-    WorldObject(Desk, sf::Vector2f(1 * defTileSize, 9 * defTileSize), 1),
-    WorldObject(Desk, sf::Vector2f(1 * defTileSize, 7 * defTileSize), 1),
+    WorldObject(enums::Bed, sf::Vector2f(1 * defTileSize, 5 * defTileSize), 0),
+    WorldObject(enums::Bed, sf::Vector2f(1 * defTileSize, 11 * defTileSize), 0),
+    WorldObject(enums::Closet, sf::Vector2f(7 * defTileSize, 5 * defTileSize), 0),
+    WorldObject(enums::Closet, sf::Vector2f(7 * defTileSize, 11 * defTileSize), 2),
+    WorldObject(enums::Desk, sf::Vector2f(1 * defTileSize, 9 * defTileSize), 1),
+    WorldObject(enums::Desk, sf::Vector2f(1 * defTileSize, 7 * defTileSize), 1),
 
 };
 //{int(Bed), 1, 5}, {Bed, 1, 11}, {Desk, 1, 7}, {Desk, 1, 9}, {Closet, 7, 5}, {Closet, 7, 11}

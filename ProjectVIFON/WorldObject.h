@@ -7,7 +7,7 @@
 class WorldObject {
 private:
 	// name of the object
-	movableObject name;
+	enums::movableObject name;
 	// pointer to the triangles rendered on the world map
 	sf::Vertex* objTriangles;
 	// integer stating amout of 90 degree rotations (anticlockwise)
@@ -20,7 +20,7 @@ private:
 	sf::IntRect getTEXrect();
 public:
 	// default constructor
-	WorldObject(movableObject name, sf::Vector2f position, int rotation);
+	WorldObject(enums::movableObject name, sf::Vector2f position, int rotation);
 	//getter for the rotation
 	int getRot() const;
 	// getter for the position

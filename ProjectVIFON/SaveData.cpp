@@ -17,7 +17,7 @@ SaveData::SaveData() {
 		std::cerr << "Unable to open file." << std::endl;
 	}
 
-	map section = map(-1);
+	enums::map section = enums::map(-1);
 	bool rendD = false, mapD = false, mapSize = false, objectsD = false, sect_end = true;
 
 	// variables to store temporarily the components of the configuration
@@ -32,7 +32,7 @@ SaveData::SaveData() {
 		// (specifies which map is rendered)
 		if (record_lines[i][0] == '/' && record_lines[i][2] == '/' && sect_end) {
 			sect_end = !sect_end;
-			section = map(int(record_lines[i][1] - '0'));
+			section = enums::map(int(record_lines[i][1] - '0'));
 			std::cout << "Rendering the map " << int(section) << std::endl;
 			continue;
 		}
@@ -48,7 +48,7 @@ SaveData::SaveData() {
 				TEMPTEXscheme2[j] = TEMPTEXscheme[j];
 			}
 			switch (section) {
-				case dorm:
+				case enums::dorm:
 					Config TEMPconfig(TEMPwidth, TEMPheight, "../Graphics/Background/dormBackgroundTEX.png", "../Graphics/Movable/dormFurnitureTEX.png", TEMPTEXscheme2, TEMPMovableScheme, TEMPplayerCoords);
 					dormConfig = TEMPconfig;
 					break;
@@ -180,13 +180,40 @@ SaveData::SaveData() {
 			temp.erase();
 			
 			//adding the new object to the vector
-			TEMPMovableScheme.push_back(WorldObject(movableObject(name), sf::Vector2f(corX*defTileSize, corY*defTileSize), rot));
+			TEMPMovableScheme.push_back(WorldObject(enums::movableObject(name), sf::Vector2f(corX*defTileSize, corY*defTileSize), rot));
 			std::cout << "Object rendered correctly" << std::endl;
 			continue;
 		}
 
 	}
 
+}
+
+SaveData::SaveData(std::string fileName) {
+	// opening the file with the save 
+	std::ifstream f(fileName);
+	json js;
+	f >> js;
+
+	// reading the player data
+	
+	json plNeeds = js["PLAYERCONFIG"]["needs"];
+	int needs[8] = {
+		plNeeds["physical health"], plNeeds["mental health"], plNeeds["hunger"], plNeeds["thirst"],
+		plNeeds["toilet"], plNeeds["hygene"], plNeeds["energy"], plNeeds["entertainment"]
+	};
+
+	std::vector <Food> FoodArray;
+	auto plFood = js["PLAYERCONFIG"]["owned food"];
+	for (auto& foodie : plFood) {
+		FoodArray.push_back(Food(enums::str_food[plFood["name"]],plFood["name"], plFood["amount"]));
+	}
+	
+
+	Player tempPlayer(js["PLAYERCONFIG"]["nick"], enums::fieldOfStudy(js["PLAYERCONFIG"]["field of study"]), js["PLAYERCONFIG"]["money"], needs,
+		js["PLAYERCONFIG"]["accomodation"]["days untill fee"], enums::accomodation(js["PLAYERCONFIG"]["accomodation"]["type"]), FoodArray);
+	
+	// reading the dorm data
 }
 
 // getter for the dorm map configuration

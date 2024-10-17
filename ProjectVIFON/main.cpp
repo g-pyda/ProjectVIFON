@@ -16,6 +16,7 @@ int main() {
     sf::View gameplayView(sf::FloatRect(0, 0, windowWidth, windowHeight));
 
     SaveData newSave;
+    SaveData newSave2("../Saves/save.json");
     WorldMap dormMAP(sf::Vector2u(defTileSize, defTileSize), newSave.getDormConfig());
 
     if (!avatarTEX.loadFromFile("../Graphics/avatar.png"))
@@ -34,7 +35,7 @@ int main() {
         long long deltaTime = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 
         // move byt offset multiplied by delta time
-        const float vel = 0.003f * deltaTime;
+        const float vel = 0.001f * deltaTime;
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             gameplayView.move(sf::Vector2f(0, -vel));

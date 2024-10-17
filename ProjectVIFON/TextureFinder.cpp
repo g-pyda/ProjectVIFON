@@ -1,20 +1,20 @@
 #include "TextureFinder.h"
 
-int defNrOfTiles(movableObject objToCheck) {
+int defNrOfTiles(enums::movableObject objToCheck) {
 	switch (objToCheck) {
-	case Bed:
-	case Closet:
-	case Bath:
-	case Bookshelve:
+	case enums::Bed:
+	case enums::Closet:
+	case enums::Bath:
+	case enums::Bookshelve:
 		return 2;
-	case Desk:
-	case Toilet:
-	case Sink:
-	case Fridge:
-	case Stove:
-	case Counter:
-	case Fern:
-	case Sunflower:
+	case enums::Desk:
+	case enums::Toilet:
+	case enums::Sink:
+	case enums::Fridge:
+	case enums::Stove:
+	case enums::Counter:
+	case enums::Fern:
+	case enums::Sunflower:
 		return 1;
 	default:
 		return 0;

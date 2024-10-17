@@ -2,7 +2,7 @@
 #include "TextureFinder.h"
 
 // default constructor
-WorldObject::WorldObject(movableObject name, sf::Vector2f position, int rotation) {
+WorldObject::WorldObject(enums::movableObject name, sf::Vector2f position, int rotation) {
 	this->name = name;
 	this->position = position;
 	this->rotation = rotation;
@@ -26,7 +26,7 @@ sf::IntRect WorldObject::getTEXrect() {
 	// getting to know the position of the texture in the texture file
 	int TEXpos = 0;
 	for (int i = 0; i < name; i++) {
-		TEXpos += (defTileSize * 2) * defNrOfTiles(movableObject(i));
+		TEXpos += (defTileSize * 2) * defNrOfTiles(enums::movableObject(i));
 	}
 
 	return sf::IntRect(TEXpos, 0, defTileSize * 2 * tilesNR, defTileSize * 2);
