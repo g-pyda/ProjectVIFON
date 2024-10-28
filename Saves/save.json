@@ -23,8 +23,8 @@
             "type" : 0
         },
         "owned food" : [
-            {"name" : 1, "amount" : 4},
-            {"name" : 8, "amount" : 7}
+            {"name" : 1, "amount" : 4, "expiration days" : 5},
+            {"name" : 8, "amount" : 7, "expiration days" : 4}
         ]
 
     },
@@ -87,12 +87,16 @@
         "backgroundTEXadress" : "../Graphics/Background/dormBackgroundTEX.png",
         "movableTEXadress" : "../Graphics/Movable/dormFurnitureTEX.png",
         "objects" : [
-            {"name" : 0, "coordinates" : { "x" : 1, "y" : 5}, "rotation" : 0},
-            {"name" : 0, "coordinates" : { "x" : 1, "y" : 11}, "rotation" : 0},
-            {"name" : 1, "coordinates" : { "x" : 1, "y" : 7}, "rotation" : 1},
-            {"name" : 1, "coordinates" : { "x" : 1, "y" : 9}, "rotation" : 1},
-            {"name" : 2, "coordinates" : { "x" : 7, "y" : 5}, "rotation" : 0},
-            {"name" : 2, "coordinates" : { "x" : 7, "y" : 11}, "rotation" : 2}
-        ]
+            {"name" : 0, "coordinates" : { "x" : 1, "y" : 4}, "rotation" : 0},
+            {"name" : 0, "coordinates" : { "x" : 1, "y" : 10}, "rotation" : 0},
+            {"name" : 1, "coordinates" : { "x" : 1, "y" : 6}, "rotation" : 1},
+            {"name" : 1, "coordinates" : { "x" : 1, "y" : 8}, "rotation" : 1},
+            {"name" : 2, "coordinates" : { "x" : 7, "y" : 4}, "rotation" : 0},
+            {"name" : 2, "coordinates" : { "x" : 7, "y" : 10}, "rotation" : 2}
+        ],
+        "spawnCoords" : {
+            "x" : 300,
+            "y" : 400
+        }
     }
 }

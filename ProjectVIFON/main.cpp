@@ -15,9 +15,11 @@ int main() {
     sf::Texture avatarTEX, dormTEX;
     sf::View gameplayView(sf::FloatRect(0, 0, windowWidth, windowHeight));
 
-    SaveData newSave;
+    //SaveData newSave;
+    //SaveData newSave;
+
     SaveData newSave2("../Saves/save.json");
-    WorldMap dormMAP(sf::Vector2u(defTileSize, defTileSize), newSave.getDormConfig());
+    WorldMap dormMAP(sf::Vector2u(defTileSize, defTileSize), newSave2.getDormConfig());
 
     if (!avatarTEX.loadFromFile("../Graphics/avatar.png"))
         std::cout << "Avatar didn't load" << std::endl;

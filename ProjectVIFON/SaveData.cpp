@@ -196,24 +196,47 @@ SaveData::SaveData(std::string fileName) {
 	f >> js;
 
 	// reading the player data
-	
+	std::cout << "Reding player data" << std::endl;
 	json plNeeds = js["PLAYERCONFIG"]["needs"];
 	int needs[8] = {
 		plNeeds["physical health"], plNeeds["mental health"], plNeeds["hunger"], plNeeds["thirst"],
 		plNeeds["toilet"], plNeeds["hygene"], plNeeds["energy"], plNeeds["entertainment"]
 	};
+	std::cout << "Needs rendered" << std::endl;
 
 	std::vector <Food> FoodArray;
-	auto plFood = js["PLAYERCONFIG"]["owned food"];
-	for (auto& foodie : plFood) {
-		FoodArray.push_back(Food(enums::str_food[plFood["name"]],plFood["name"], plFood["amount"]));
+	const json& foods = js["PLAYERCONFIG"]["owned food"];
+	//auto plFood = js["PLAYERCONFIG"]["owned food"];
+	for (const auto& foodie : foods) {
+		FoodArray.push_back(Food(enums::str_food[foodie["name"]], foodie["name"],
+			foodie["amount"], foodie["expiration days"]));
+	}
+
+	currentPlayer = Player(js["PLAYERCONFIG"]["nick"], enums::fieldOfStudy(js["PLAYERCONFIG"]["field of study"]), js["PLAYERCONFIG"]["money"], needs,
+		js["PLAYERCONFIG"]["accomodation"]["days untill fee"], enums::accomodation(js["PLAYERCONFIG"]["accomodation"]["type"]), FoodArray);
+
+	// reading the dorm data
+	const int width = js["DORMCONFIG"]["mapsize"]["x"], height = js["DORMCONFIG"]["mapsize"]["y"];
+	
+	std::vector <int> tempTileScheme_vector;
+	json jsTiles = js["DORMCONFIG"]["tilescheme"];
+	for (const auto& tile : jsTiles) {
+		tempTileScheme_vector.push_back(tile);
+	}
+
+	int tempTileScheme[MAXwidth * MAXheight];
+	for (int i = 0; i < tempTileScheme_vector.size(); ++i) {
+		tempTileScheme[i] = tempTileScheme_vector[i];
 	}
 	
+	std::vector <WorldObject> tempObjects;
+	for (const auto& object : js["DORMCONFIG"]["objects"]) {
+		tempObjects.push_back(WorldObject(object["name"], sf::Vector2f(object["coordinates"]["x"] * defTileSize, object["coordinates"]["y"] * defTileSize), object["rotation"]));
+	}
 
-	Player tempPlayer(js["PLAYERCONFIG"]["nick"], enums::fieldOfStudy(js["PLAYERCONFIG"]["field of study"]), js["PLAYERCONFIG"]["money"], needs,
-		js["PLAYERCONFIG"]["accomodation"]["days untill fee"], enums::accomodation(js["PLAYERCONFIG"]["accomodation"]["type"]), FoodArray);
+	dormConfig = Config(width, height, js["DORMCONFIG"]["backgroundTEXadress"], js["DORMCONFIG"]["movableTEXadress"], tempTileScheme,
+		tempObjects,  sf::Vector2f(js["DORMCONFIG"]["spawnCoords"]["x"], js["DORMCONFIG"]["spawnCoords"]["y"]));
 	
-	// reading the dorm data
 }
 
 // getter for the dorm map configuration
