@@ -12,21 +12,15 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(windowWidth,windowHeight), "Texture generating testing!");
     window.setFramerateLimit(0u);
     window.setVerticalSyncEnabled(false);
-    sf::Texture avatarTEX, dormTEX;
+    sf::Texture dormTEX;
     sf::View gameplayView(sf::FloatRect(0, 0, windowWidth, windowHeight));
-
-    //SaveData newSave;
-    //SaveData newSave;
 
     SaveData newSave2("../Saves/save.json");
     WorldMap dormMAP(sf::Vector2u(defTileSize, defTileSize), newSave2.getDormConfig());
 
-    if (!avatarTEX.loadFromFile("../Graphics/avatar.png"))
-        std::cout << "Avatar didn't load" << std::endl;
-    sf::Sprite avatar;
-    avatar.setTexture(avatarTEX);
-    avatar.setPosition( windowWidth/2.0f, windowHeight/2.0f);
-
+    Player player = newSave2.getPlayer();
+    sf::IntRect test = player.getAvatarPtr()->getTextureRect();
+    std::cout << test.height << " " << test.width << std::endl;
 
     while (window.isOpen()) {
         // getting timestamp
@@ -41,33 +35,33 @@ int main() {
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             gameplayView.move(sf::Vector2f(0, -vel));
-            avatar.move(sf::Vector2f(0, -vel));
-            while (dormMAP.is_colliding_top(&avatar)) {
-                avatar.move(sf::Vector2f(0, vel));
+            player.move(sf::Vector2f(0, -vel));
+            while (dormMAP.is_colliding_top(player.getAvatarPtr())) {
+                player.move(sf::Vector2f(0, vel));
                 gameplayView.move(sf::Vector2f(0, vel));
             }
         }
        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             gameplayView.move(sf::Vector2f(0, vel));
-            avatar.move(sf::Vector2f(0, vel));
-            while (dormMAP.is_colliding_bottom(&avatar)) {
-                avatar.move(sf::Vector2f(0, -vel));
+            player.move(sf::Vector2f(0, vel));
+            while (dormMAP.is_colliding_bottom(player.getAvatarPtr())) {
+                player.move(sf::Vector2f(0, -vel));
                 gameplayView.move(sf::Vector2f(0, -vel));
             }
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
             gameplayView.move(sf::Vector2f(-vel, 0));
-            avatar.move(sf::Vector2f(-vel, 0));
-            while (dormMAP.is_colliding_left(&avatar)) {
-                avatar.move(sf::Vector2f(vel, 0));
+            player.move(sf::Vector2f(-vel, 0));
+            while (dormMAP.is_colliding_left(player.getAvatarPtr())) {
+                player.move(sf::Vector2f(vel, 0));
                 gameplayView.move(sf::Vector2f(vel, 0));
             }
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             gameplayView.move(sf::Vector2f(vel, 0));
-            avatar.move(sf::Vector2f(vel, 0));
-            while (dormMAP.is_colliding_right(&avatar)) {
-                avatar.move(sf::Vector2f(-vel, 0));
+            player.move(sf::Vector2f(vel, 0));
+            while (dormMAP.is_colliding_right(player.getAvatarPtr())) {
+                player.move(sf::Vector2f(-vel, 0));
                 gameplayView.move(sf::Vector2f(-vel, 0));
             }
         }
@@ -77,27 +71,27 @@ int main() {
                 window.close();
         }
     //checking for the additional collisions
-    while (dormMAP.is_colliding_top(&avatar)) {
-        avatar.move(sf::Vector2f(0, vel));
+    while (dormMAP.is_colliding_top(player.getAvatarPtr())) {
+        player.move(sf::Vector2f(0, vel));
         gameplayView.move(sf::Vector2f(0, vel));
     }
-    while (dormMAP.is_colliding_bottom(&avatar)) {
-        avatar.move(sf::Vector2f(0, -vel));
+    while (dormMAP.is_colliding_bottom(player.getAvatarPtr())) {
+        player.move(sf::Vector2f(0, -vel));
         gameplayView.move(sf::Vector2f(0, -vel));
     }
-    while (dormMAP.is_colliding_right(&avatar)) {
-        avatar.move(sf::Vector2f(-vel, 0));
+    while (dormMAP.is_colliding_right(player.getAvatarPtr())) {
+        player.move(sf::Vector2f(-vel, 0));
         gameplayView.move(sf::Vector2f(-vel, 0));
     }
-    while (dormMAP.is_colliding_left(&avatar)) {
-        avatar.move(sf::Vector2f(vel, 0));
+    while (dormMAP.is_colliding_left(player.getAvatarPtr())) {
+        player.move(sf::Vector2f(vel, 0));
         gameplayView.move(sf::Vector2f(vel, 0));
     }
 
         window.clear();
         window.setView(gameplayView);
         window.draw(dormMAP);
-        window.draw(avatar);
+        window.draw(*player.getAvatarPtr());
         window.display();
         
     }

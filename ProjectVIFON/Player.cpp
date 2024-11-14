@@ -4,8 +4,8 @@ Player::Player() {
 	std::cout << "New player created" << std::endl;
 }
 
-Player::Player(std::string nickname, enums::fieldOfStudy studies, int money, int needs[8],
-	int d_till_fee, enums::accomodation accom_type, std::vector <Food> owned_food) {
+Player::Player(std::string nickname, enums::fieldOfStudy studies, int money, int needs[8], int d_till_fee, 
+	enums::accomodation accom_type, std::vector <Food> owned_food, std::string TEXadress, sf::Vector2f coordinates) {
 	// overal info
 	this->nickname = nickname;
 	this->field = studies;
@@ -27,6 +27,13 @@ Player::Player(std::string nickname, enums::fieldOfStudy studies, int money, int
 
 	//owned objects
 	this->ownedFood = owned_food;
+
+	//avatar
+	sf::Texture avatarTEX;
+	if (!avatarTEX.loadFromFile(TEXadress))
+		std::cout << "Avatar didn't load" << std::endl;
+	this->avatar.setTexture(avatarTEX);
+	this->avatar.setPosition(coordinates.x, coordinates.y);
 }
 
 void Player::operator=(const Player& another) {
@@ -51,4 +58,12 @@ void Player::operator=(const Player& another) {
 
 	//owned objects
 	this->ownedFood = another.ownedFood;
+}
+
+sf::Sprite* Player::getAvatarPtr() {
+	return &(this->avatar);
+}
+
+void Player::move(sf::Vector2f offset) {
+	this->avatar.move(offset);
 }

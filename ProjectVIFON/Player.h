@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <SFML/Graphics.hpp>
 #include "constants.h"
 #include "Food.h"
 
@@ -22,16 +23,23 @@ private:
 	int NDenergy;
 	int NDentertainment;
 
-	//accommodation status
+	// avatar to display
+	sf::Sprite avatar;
+
+	// accommodation status
 	int daysTillFee;
 	int accommodationType;
 
-	//owned objects
+	// owned objects
 	std::vector <Food> ownedFood = {};
 public:
 	Player();
-	Player(std::string nickname, enums::fieldOfStudy studies, int money, int needs[8],
-		int d_till_fee, enums::accomodation accom_type, std::vector <Food> owned_food);
+	Player(std::string nickname, enums::fieldOfStudy studies, int money, int needs[8], int d_till_fee, 
+		enums::accomodation accom_type, std::vector <Food> owned_food, std::string TEXadress, sf::Vector2f coordinates);
 	void operator=(const Player& another);
+	void move(sf::Vector2f offset);
+	sf::Sprite* getAvatarPtr();
+
+	friend int main();
 };
 

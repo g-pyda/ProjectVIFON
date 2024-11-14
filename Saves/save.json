@@ -25,8 +25,8 @@
         "owned food" : [
             {"name" : 1, "amount" : 4, "expiration days" : 5},
             {"name" : 8, "amount" : 7, "expiration days" : 4}
-        ]
-
+        ],
+        "TEXadress" : "../Graphics/avatar.png"
     },
     "DORMCONFIG" : {
         "mapsize" : {

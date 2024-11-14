@@ -13,7 +13,6 @@ using json = nlohmann::json;
 class SaveData {
 public:
 	// default constructor
-	SaveData();
 	SaveData(std::string);
 	// getter for the dorm map configuration
 	Config getDormConfig() const;
@@ -23,6 +22,7 @@ public:
 	//Config getHipermarketConfig() const;
 	//// getter for the outdoor map configuration
 	//Config getOutdoorConfig() const;
+	Player getPlayer();
 private:
 	Config dormConfig;
 	//Config outdoorConfig;

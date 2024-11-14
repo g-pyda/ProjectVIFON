@@ -10,7 +10,7 @@ private:
 	enums::movableObject name;
 	// pointer to the triangles rendered on the world map
 	sf::Vertex* objTriangles;
-	// integer stating amout of 90 degree rotations (anticlockwise)
+	// integer stating amount of 90 degree rotations (anticlockwise)
 	int rotation;
 	// vector to the position of the object
 	sf::Vector2f position;
