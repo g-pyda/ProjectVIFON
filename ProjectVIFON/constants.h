@@ -46,7 +46,7 @@ namespace enums {
 	};
 
 	static enum movableObject {
-		Bed, Desk, Closet, Toilet, Sink, Bath, Fridge, Stove, Counter, Bookshelve, Fern, Sunflower
+		Bed, Desk, Closet, Toilet, Sink, Bath, Fridge, Stove, Counter, Bookshelve, Fern, Sunflower, none
 	};
 	
 	static enum map {

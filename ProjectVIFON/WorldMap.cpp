@@ -262,3 +262,23 @@ bool WorldMap::is_colliding_bottom(sf::Sprite* sprite) {
     }
     return false;
 }
+
+//method to check, which world object is the closest one to the Player
+enums::movableObject WorldMap::getClosestObject(sf::IntRect plRect) {
+    enums::movableObject result = enums::movableObject::none;
+    float distanceSQR, smallestDistanceSQR = pow(50,2);
+    
+    for (auto &object : movableObjects) {
+        sf::Vector2f objCoords = object.getPosition();
+        sf::Vector2f objSize = object.getSize();
+        distanceSQR = std::min(pow(objCoords.x + objSize.x - plRect.left, 2), 
+            std::min(pow(objCoords.x - plRect.left - plRect.width, 2), 
+                std::min(pow(objCoords.y + objSize.y - plRect.top, 2), pow(objCoords.y - plRect.height - plRect.top, 2))));
+        if (distanceSQR < smallestDistanceSQR) {
+            result = object.getName();
+            smallestDistanceSQR = distanceSQR;
+        }
+    }
+    std::cout << smallestDistanceSQR << std::endl;
+    return result;
+}

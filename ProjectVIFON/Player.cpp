@@ -70,5 +70,48 @@ sf::Sprite* Player::getAvatarPtr() {
 
 void Player::move(sf::Vector2f offset) {
 	this->avatar.move(offset);
-	std::cout << avatar.getTextureRect().left << " , " << avatar.getTextureRect().top << std::endl;
+}
+
+void Player::use(enums::movableObject object) {
+	switch (object) {
+	case enums::movableObject::Bed:
+		std::cout << "Bed approached - sleep, nap, lay down" << std::endl;
+		break;
+	case enums::movableObject::Desk:
+		std::cout << "Desk approached - sit, learn, play on the computer(optional)" << std::endl;
+		break;
+	case enums::movableObject::Closet:
+		std::cout << "Closet approached - change clothes, take dirty clothes" << std::endl;
+		break;
+	case enums::movableObject::Toilet:
+		std::cout << "Toilet approached - pee, poop, scroll through the internet" << std::endl;
+		break;
+	case enums::movableObject::Sink:
+		std::cout << "Sink approached - wash hands, wash face, brush the teeth, flex in front of the mirror" << std::endl;
+		break;
+	case enums::movableObject::Bath:
+		std::cout << "Bath approached - take a long bath, take a fast shower" << std::endl;
+		break;
+	case enums::movableObject::Fridge:
+		std::cout << "Fridge approached - open, eat something random" << std::endl;
+		break;
+	case enums::movableObject::Stove:
+		std::cout << "Stove approached - cook, cook something random, bake, make a hot drink" << std::endl;
+		break;
+	case enums::movableObject::Counter:
+		std::cout << "Counter approached - open, eat something random" << std::endl;
+		break;
+	case enums::movableObject::Bookshelve:
+		std::cout << "Bookshelve approached - read, read something random" << std::endl;
+		break;
+	case enums::movableObject::Fern:
+		std::cout << "Fern approached - look at" << std::endl;
+		break;
+	case enums::movableObject::Sunflower:
+		std::cout << "Sunflower approached - look at" << std::endl;
+		break;
+	case enums::movableObject::none:
+	default:
+		break;
+	}
 }

@@ -87,12 +87,16 @@ int main() {
         (player)->move(sf::Vector2f(vel, 0));
         gameplayView.move(sf::Vector2f(vel, 0));
     }
+    sf::IntRect playerRect = sf::IntRect(sf::Vector2i(player->getAvatarPtr()->getPosition().x, player->getAvatarPtr()->getPosition().y), 
+        sf::Vector2i(player->getAvatarPtr()->getTexture()->getSize().x, player->getAvatarPtr()->getTexture()->getSize().y));
+    enums::movableObject closestObject = dormMAP.getClosestObject(playerRect);
+    player->use(closestObject);
 
-        window.clear();
-        window.setView(gameplayView);
-        window.draw(dormMAP);
-        window.draw(*(player)->getAvatarPtr());
-        window.display();
+    window.clear();
+    window.setView(gameplayView);
+    window.draw(dormMAP);
+    window.draw(*(player)->getAvatarPtr());
+    window.display();
         
     }
 

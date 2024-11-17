@@ -16,17 +16,19 @@ private:
 	sf::Vector2f position;
 	// vector of the object's size
 	sf::Vector2f size;
-	// function to render the proper texture of the object
-	sf::IntRect getTEXrect();
 public:
 	// default constructor
 	WorldObject(enums::movableObject name, sf::Vector2f position, int rotation);
+	//getter for enum name
+	enums::movableObject getName() const;
 	//getter for the rotation
 	int getRot() const;
 	// getter for the position
 	sf::Vector2f getPosition() const;
 	// getter for the size
 	sf::Vector2f getSize() const;
+	// function to render the proper texture of the object
+	sf::IntRect getTEXrect();
 	//friend class
 	friend class WorldMap;
 };

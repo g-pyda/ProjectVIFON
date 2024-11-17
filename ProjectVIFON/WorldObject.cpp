@@ -48,3 +48,8 @@ sf::Vector2f WorldObject::getPosition() const {
 sf::Vector2f WorldObject::getSize() const {
 	return size;
 }
+
+//getter for the enum name
+enums::movableObject WorldObject::getName() const {
+	return name;
+}
