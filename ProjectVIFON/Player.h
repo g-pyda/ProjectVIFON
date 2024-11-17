@@ -25,6 +25,7 @@ private:
 
 	// avatar to display
 	sf::Sprite avatar;
+	sf::Texture texture;
 
 	// accommodation status
 	int daysTillFee;
@@ -39,7 +40,5 @@ public:
 	void operator=(const Player& another);
 	void move(sf::Vector2f offset);
 	sf::Sprite* getAvatarPtr();
-
-	friend int main();
 };
 

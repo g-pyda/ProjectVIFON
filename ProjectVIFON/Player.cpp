@@ -29,10 +29,9 @@ Player::Player(std::string nickname, enums::fieldOfStudy studies, int money, int
 	this->ownedFood = owned_food;
 
 	//avatar
-	sf::Texture avatarTEX;
-	if (!avatarTEX.loadFromFile(TEXadress))
+	if (!this->texture.loadFromFile(TEXadress))
 		std::cout << "Avatar didn't load" << std::endl;
-	this->avatar.setTexture(avatarTEX);
+	this->avatar.setTexture(texture);
 	this->avatar.setPosition(coordinates.x, coordinates.y);
 }
 
@@ -58,6 +57,11 @@ void Player::operator=(const Player& another) {
 
 	//owned objects
 	this->ownedFood = another.ownedFood;
+
+	// avatar to display
+	this->texture = another.texture;
+	this->avatar.setPosition(another.avatar.getPosition());
+	this->avatar.setTexture(texture);
 }
 
 sf::Sprite* Player::getAvatarPtr() {
@@ -66,4 +70,5 @@ sf::Sprite* Player::getAvatarPtr() {
 
 void Player::move(sf::Vector2f offset) {
 	this->avatar.move(offset);
+	std::cout << avatar.getTextureRect().left << " , " << avatar.getTextureRect().top << std::endl;
 }

@@ -3,8 +3,8 @@
         "nick" : "admin",        
         "localisation" : 1,
         "coordinates" : {
-            "x" : 300,
-            "y" : 190
+            "x" : 512,
+            "y" : 320
         },
         "needs" : {
             "physical health" : 100,
@@ -92,7 +92,37 @@
             {"name" : 1, "coordinates" : { "x" : 1, "y" : 6}, "rotation" : 1},
             {"name" : 1, "coordinates" : { "x" : 1, "y" : 8}, "rotation" : 1},
             {"name" : 2, "coordinates" : { "x" : 7, "y" : 4}, "rotation" : 0},
-            {"name" : 2, "coordinates" : { "x" : 7, "y" : 10}, "rotation" : 2}
+            {"name" : 2, "coordinates" : { "x" : 7, "y" : 10}, "rotation" : 2},
+
+            {"name" : 0, "coordinates" : { "x" : 1, "y" : 13}, "rotation" : 0},
+            {"name" : 0, "coordinates" : { "x" : 1, "y" : 19}, "rotation" : 0},
+            {"name" : 1, "coordinates" : { "x" : 1, "y" : 15}, "rotation" : 1},
+            {"name" : 1, "coordinates" : { "x" : 1, "y" : 17}, "rotation" : 1},
+            {"name" : 2, "coordinates" : { "x" : 7, "y" : 13}, "rotation" : 0},
+            {"name" : 2, "coordinates" : { "x" : 7, "y" : 19}, "rotation" : 2},
+
+            {"name" : 0, "coordinates" : { "x" : 1, "y" : 22}, "rotation" : 0},
+            {"name" : 0, "coordinates" : { "x" : 1, "y" : 28}, "rotation" : 0},
+            {"name" : 1, "coordinates" : { "x" : 1, "y" : 24}, "rotation" : 1},
+            {"name" : 1, "coordinates" : { "x" : 1, "y" : 26}, "rotation" : 1},
+            {"name" : 2, "coordinates" : { "x" : 7, "y" : 22}, "rotation" : 0},
+            {"name" : 2, "coordinates" : { "x" : 7, "y" : 28}, "rotation" : 2},
+
+            {"name" : 0, "coordinates" : { "x" : 1, "y" : 31}, "rotation" : 0},
+            {"name" : 0, "coordinates" : { "x" : 1, "y" : 37}, "rotation" : 0},
+            {"name" : 1, "coordinates" : { "x" : 1, "y" : 33}, "rotation" : 1},
+            {"name" : 1, "coordinates" : { "x" : 1, "y" : 35}, "rotation" : 1},
+            {"name" : 2, "coordinates" : { "x" : 7, "y" : 31}, "rotation" : 0},
+            {"name" : 2, "coordinates" : { "x" : 7, "y" : 37}, "rotation" : 2},
+
+            {"name" : 5, "coordinates" : { "x" : 1, "y" : 40}, "rotation" : 1},
+            {"name" : 3, "coordinates" : { "x" : 3, "y" : 42}, "rotation" : 2},
+            {"name" : 4, "coordinates" : { "x" : 6, "y" : 42}, "rotation" : 1},
+            
+            {"name" : 5, "coordinates" : { "x" : 29, "y" : 40}, "rotation" : 1},
+            {"name" : 3, "coordinates" : { "x" : 27, "y" : 42}, "rotation" : 2},
+            {"name" : 4, "coordinates" : { "x" : 24, "y" : 42}, "rotation" : 3}
+            
         ],
         "spawnCoords" : {
             "x" : 300,

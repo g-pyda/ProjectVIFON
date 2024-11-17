@@ -6,8 +6,11 @@ SaveData::SaveData(std::string fileName) {
 	std::ifstream f(fileName);
 	json js;
 	f >> js;
-
+	//
+	// 
 	// reading the player data
+	//
+	//
 	json plNeeds = js["PLAYERCONFIG"]["needs"];
 	int needs[8] = {
 		plNeeds["physical health"], plNeeds["mental health"], plNeeds["hunger"], plNeeds["thirst"],
@@ -17,14 +20,25 @@ SaveData::SaveData(std::string fileName) {
 	std::vector <Food> FoodArray;
 	const json& foods = js["PLAYERCONFIG"]["owned food"];
 	for (const auto& foodie : foods) {
-		FoodArray.push_back(Food(enums::str_food[foodie["name"]], foodie["name"],
-			foodie["amount"], foodie["expiration days"]));
+		std::string name_str = enums::str_food[foodie["name"]];
+		int name = foodie["name"];
+		int amount = foodie["amount"];
+		int exp_date = foodie["expiration days"];
+		FoodArray.push_back(Food(name_str, (enums::food)name,
+			amount, exp_date));
 	}
 
-	currentPlayer = Player(js["PLAYERCONFIG"]["nick"], enums::fieldOfStudy(js["PLAYERCONFIG"]["field of study"]), js["PLAYERCONFIG"]["money"], needs, js["PLAYERCONFIG"]["accomodation"]["days untill fee"], 
-		enums::accomodation(js["PLAYERCONFIG"]["accomodation"]["type"]), FoodArray, js["PLAYERCONFIG"]["TEXadress"], sf::Vector2f(js["PLAYERCONFIG"]["coordinates"]["x"], js["PLAYERCONFIG"]["coordinates"]["y"]));
+	int x = js["PLAYERCONFIG"]["coordinates"]["x"];
+	int y = js["PLAYERCONFIG"]["coordinates"]["y"];
 
+	this->currentPlayer = Player(js["PLAYERCONFIG"]["nick"], enums::fieldOfStudy(js["PLAYERCONFIG"]["field of study"]), js["PLAYERCONFIG"]["money"], needs, js["PLAYERCONFIG"]["accomodation"]["days untill fee"], 
+		enums::accomodation(js["PLAYERCONFIG"]["accomodation"]["type"]), FoodArray, js["PLAYERCONFIG"]["TEXadress"], sf::Vector2f(x, y));
+	//
+	//
+	// 
 	// reading the dorm data
+	//
+	//
 	const int width = js["DORMCONFIG"]["mapsize"]["x"], height = js["DORMCONFIG"]["mapsize"]["y"];
 	
 	std::vector <int> tempTileScheme_vector;
@@ -43,7 +57,7 @@ SaveData::SaveData(std::string fileName) {
 		tempObjects.push_back(WorldObject(object["name"], sf::Vector2f(object["coordinates"]["x"] * defTileSize, object["coordinates"]["y"] * defTileSize), object["rotation"]));
 	}
 
-	dormConfig = Config(width, height, js["DORMCONFIG"]["backgroundTEXadress"], js["DORMCONFIG"]["movableTEXadress"], tempTileScheme,
+	this->dormConfig = Config(width, height, js["DORMCONFIG"]["backgroundTEXadress"], js["DORMCONFIG"]["movableTEXadress"], tempTileScheme,
 		tempObjects,  sf::Vector2f(js["DORMCONFIG"]["spawnCoords"]["x"], js["DORMCONFIG"]["spawnCoords"]["y"]));
 	
 }
@@ -69,7 +83,7 @@ Config SaveData::getDormConfig() const {
 //}
 
 
-Player SaveData::getPlayer() {
-	return currentPlayer;
+Player* SaveData::getPlayerPtr() {
+	return &(this->currentPlayer);
 }
 

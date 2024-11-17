@@ -22,7 +22,7 @@ public:
 	//Config getHipermarketConfig() const;
 	//// getter for the outdoor map configuration
 	//Config getOutdoorConfig() const;
-	Player getPlayer();
+	Player* getPlayerPtr();
 private:
 	Config dormConfig;
 	//Config outdoorConfig;
