@@ -31,8 +31,11 @@ SaveData::SaveData(std::string fileName) {
 	int x = js["PLAYERCONFIG"]["coordinates"]["x"];
 	int y = js["PLAYERCONFIG"]["coordinates"]["y"];
 
-	this->currentPlayer = Player(js["PLAYERCONFIG"]["nick"], enums::fieldOfStudy(js["PLAYERCONFIG"]["field of study"]), js["PLAYERCONFIG"]["money"], needs, js["PLAYERCONFIG"]["accomodation"]["days untill fee"], 
-		enums::accomodation(js["PLAYERCONFIG"]["accomodation"]["type"]), FoodArray, js["PLAYERCONFIG"]["TEXadress"], sf::Vector2f(x, y));
+	//try {
+		this->currentPlayer = Player(js["PLAYERCONFIG"]["nick"], enums::fieldOfStudy(js["PLAYERCONFIG"]["field of study"]), js["PLAYERCONFIG"]["money"], needs, js["PLAYERCONFIG"]["accomodation"]["days untill fee"],
+			enums::accomodation(js["PLAYERCONFIG"]["accomodation"]["type"]), FoodArray, js["PLAYERCONFIG"]["TEXadress"], sf::Vector2f(x, y));
+	//}
+	//catch(...) {}
 	//
 	//
 	// 

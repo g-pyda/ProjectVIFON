@@ -20,7 +20,7 @@ int main() {
 
     Player* player = newSave2.getPlayerPtr();
     //gameplayView.move(sf::Vector2f(
-    //    (*player).getAvatarPtr()->getPosition().x ,(*player).getAvatarPtr()->getPosition().y));
+    //    player->getAvatarPtr()->getPosition().x , player->getAvatarPtr()->getPosition().y));
 
     while (window.isOpen()) {
         // getting timestamp
@@ -95,7 +95,7 @@ int main() {
     window.clear();
     window.setView(gameplayView);
     window.draw(dormMAP);
-    window.draw(*(player)->getAvatarPtr());
+    window.draw(*player->getAvatarPtr());
     window.display();
         
     }

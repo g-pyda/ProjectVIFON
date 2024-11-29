@@ -266,14 +266,21 @@ bool WorldMap::is_colliding_bottom(sf::Sprite* sprite) {
 //method to check, which world object is the closest one to the Player
 enums::movableObject WorldMap::getClosestObject(sf::IntRect plRect) {
     enums::movableObject result = enums::movableObject::none;
-    float distanceSQR, smallestDistanceSQR = pow(50,2);
+    float distanceSQR, smallestDistanceSQR = pow(70, 2); // Initialize with the maximum allowed squared distance
+
+    // Get the center of the player's bounding box
+    sf::Vector2f playerCenter(plRect.left + plRect.width / 2.0f, plRect.top + plRect.height / 2.0f);
     
-    for (auto &object : movableObjects) {
+    for (auto& object : movableObjects) {
+        // Get the center of the object's bounding box
         sf::Vector2f objCoords = object.getPosition();
         sf::Vector2f objSize = object.getSize();
-        distanceSQR = std::min(pow(objCoords.x + objSize.x - plRect.left, 2), 
-            std::min(pow(objCoords.x - plRect.left - plRect.width, 2), 
-                std::min(pow(objCoords.y + objSize.y - plRect.top, 2), pow(objCoords.y - plRect.height - plRect.top, 2))));
+        sf::Vector2f objectCenter(objCoords.x + objSize.x / 2.0f, objCoords.y + objSize.y / 2.0f);
+
+        // Calculate the squared distance between player center and object center
+        distanceSQR = pow(objectCenter.x - playerCenter.x, 2) + pow(objectCenter.y - playerCenter.y, 2);
+
+        // Update the closest object if this one is closer
         if (distanceSQR < smallestDistanceSQR) {
             result = object.getName();
             smallestDistanceSQR = distanceSQR;
