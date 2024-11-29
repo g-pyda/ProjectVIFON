@@ -22,7 +22,6 @@ public:
 
     //method to check, which world object is the closest one to the Player
     enums::movableObject getClosestObject(sf::IntRect plRect);
-
 private:
     // array of vertice - background/walls
     sf::VertexArray tileArray;

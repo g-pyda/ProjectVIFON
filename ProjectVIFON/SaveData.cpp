@@ -31,19 +31,14 @@ SaveData::SaveData(std::string fileName) {
 	int x = js["PLAYERCONFIG"]["coordinates"]["x"];
 	int y = js["PLAYERCONFIG"]["coordinates"]["y"];
 
-	//try {
-		this->currentPlayer = Player(js["PLAYERCONFIG"]["nick"], enums::fieldOfStudy(js["PLAYERCONFIG"]["field of study"]), js["PLAYERCONFIG"]["money"], needs, js["PLAYERCONFIG"]["accomodation"]["days untill fee"],
+	this->currentPlayer = Player(js["PLAYERCONFIG"]["nick"], enums::fieldOfStudy(js["PLAYERCONFIG"]["field of study"]), js["PLAYERCONFIG"]["money"], needs, js["PLAYERCONFIG"]["accomodation"]["days until fee"],
 			enums::accomodation(js["PLAYERCONFIG"]["accomodation"]["type"]), FoodArray, js["PLAYERCONFIG"]["TEXadress"], sf::Vector2f(x, y));
-	//}
-	//catch(...) {}
-	//
-	//
-	// 
+
 	// reading the dorm data
 	//
 	//
 	const int width = js["DORMCONFIG"]["mapsize"]["x"], height = js["DORMCONFIG"]["mapsize"]["y"];
-	
+
 	std::vector <int> tempTileScheme_vector;
 	json jsTiles = js["DORMCONFIG"]["tilescheme"];
 	for (const auto& tile : jsTiles) {
@@ -54,15 +49,14 @@ SaveData::SaveData(std::string fileName) {
 	for (int i = 0; i < tempTileScheme_vector.size(); ++i) {
 		tempTileScheme[i] = tempTileScheme_vector[i];
 	}
-	
+
 	std::vector <WorldObject> tempObjects;
 	for (const auto& object : js["DORMCONFIG"]["objects"]) {
 		tempObjects.push_back(WorldObject(object["name"], sf::Vector2f(object["coordinates"]["x"] * defTileSize, object["coordinates"]["y"] * defTileSize), object["rotation"]));
 	}
 
 	this->dormConfig = Config(width, height, js["DORMCONFIG"]["backgroundTEXadress"], js["DORMCONFIG"]["movableTEXadress"], tempTileScheme,
-		tempObjects,  sf::Vector2f(js["DORMCONFIG"]["spawnCoords"]["x"], js["DORMCONFIG"]["spawnCoords"]["y"]));
-	
+		tempObjects, sf::Vector2f(js["DORMCONFIG"]["spawnCoords"]["x"], js["DORMCONFIG"]["spawnCoords"]["y"]));
 }
 
 // getter for the dorm map configuration

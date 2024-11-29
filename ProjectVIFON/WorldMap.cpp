@@ -266,6 +266,9 @@ bool WorldMap::is_colliding_bottom(sf::Sprite* sprite) {
 //method to check, which world object is the closest one to the Player
 enums::movableObject WorldMap::getClosestObject(sf::IntRect plRect) {
     enums::movableObject result = enums::movableObject::none;
+
+    // ---------------- change the logic to the interaction field
+
     float distanceSQR, smallestDistanceSQR = pow(70, 2); // Initialize with the maximum allowed squared distance
 
     // Get the center of the player's bounding box
