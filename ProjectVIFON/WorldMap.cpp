@@ -268,27 +268,16 @@ enums::movableObject WorldMap::getClosestObject(sf::IntRect plRect) {
     enums::movableObject result = enums::movableObject::none;
 
     // ---------------- change the logic to the interaction field
+    sf::IntRect interactionRect = sf::IntRect(plRect.left + 70, plRect.top + 70, plRect.width + 140, plRect.height + 140);
 
-    float distanceSQR, smallestDistanceSQR = pow(70, 2); // Initialize with the maximum allowed squared distance
-
-    // Get the center of the player's bounding box
-    sf::Vector2f playerCenter(plRect.left + plRect.width / 2.0f, plRect.top + plRect.height / 2.0f);
-    
     for (auto& object : movableObjects) {
-        // Get the center of the object's bounding box
-        sf::Vector2f objCoords = object.getPosition();
-        sf::Vector2f objSize = object.getSize();
-        sf::Vector2f objectCenter(objCoords.x + objSize.x / 2.0f, objCoords.y + objSize.y / 2.0f);
-
-        // Calculate the squared distance between player center and object center
-        distanceSQR = pow(objectCenter.x - playerCenter.x, 2) + pow(objectCenter.y - playerCenter.y, 2);
+        // get the objects rectangle
+        sf::IntRect objRect = sf::IntRect(object.getPosition().x - 10, object.getPosition().y - 10, object.getSize().x + 10, object.getSize().y + 10);
 
         // Update the closest object if this one is closer
-        if (distanceSQR < smallestDistanceSQR) {
+        if (objRect.intersects(plRect)) {
             result = object.getName();
-            smallestDistanceSQR = distanceSQR;
+            return result;
         }
     }
-    std::cout << smallestDistanceSQR << std::endl;
-    return result;
 }

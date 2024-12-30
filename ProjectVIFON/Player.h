@@ -34,6 +34,12 @@ private:
 
 	// owned objects
 	std::vector <Food> ownedFood = {};
+
+	//manipulation over player needs
+	void eat(int hunger, int thirst, int energy);
+	
+
+
 public:
 	//constructors
 	Player();
@@ -50,6 +56,8 @@ public:
 	//---show options of usage when Player is close enough
 	//---usage is specified by the object type
 	void use(enums::movableObject object);
+
+	void evaluateEvery2min();
 	
 };
 

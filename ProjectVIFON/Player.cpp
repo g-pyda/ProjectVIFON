@@ -115,3 +115,47 @@ void Player::use(enums::movableObject object) {
 		break;
 	}
 }
+
+void Player::eat(int hunger, int thirst, int energy) {
+	this->NDhunger += hunger;
+	this->NDthirst += thirst;
+	this->NDenergy += energy;
+}
+
+void Player::evaluateEvery2min() {
+	this->NDhunger -= 5;
+	if (this->NDhunger < 30)
+		this->NDphysicalHlth -= 1;
+	else if (this->NDhunger < 10)
+		this->NDphysicalHlth -= 3;
+
+	this->NDthirst -= 5;
+	if (this->NDthirst < 30)
+		this->NDphysicalHlth -= 2;
+	else if (this->NDthirst < 10)
+		this->NDphysicalHlth -= 4;
+
+	this->NDtoilet -= 5;
+	if (this->NDhunger <= 0) {
+		this->NDtoilet = 100;
+		this->NDhygene = 0;
+	}
+
+	this->NDhygene -= 5;
+	if (this->NDhygene < 30)
+		this->NDphysicalHlth -= 1;
+	else if (this->NDhygene < 10)
+		this->NDphysicalHlth -= 3;
+
+	this->NDenergy -= 5;
+	if (this->NDenergy < 15)
+		this->NDphysicalHlth -= 1;
+	else if (this->NDhygene <= 0)
+		this->NDphysicalHlth -= 15;
+
+	this->NDentertainment -= 5;
+	if (this->NDentertainment < 30)
+		this->NDmentalHlth -= 1;
+	else if (this->NDentertainment < 10)
+		this->NDmentalHlth -= 3;
+}

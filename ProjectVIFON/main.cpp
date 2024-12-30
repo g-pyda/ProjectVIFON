@@ -13,7 +13,8 @@ int main() {
     window.setFramerateLimit(0u);
     window.setVerticalSyncEnabled(false);
     sf::Texture dormTEX;
-    sf::View gameplayView(sf::FloatRect(0, 0, windowWidth, windowHeight));
+    sf::View gameplayView(sf::FloatRect(0, 0, gameplayWidth, gameplayHeight));
+    gameplayView.setViewport(sf::FloatRect(0, 0, (double)gameplayWidth / windowWidth, (double)gameplayHeight / windowHeight));
 
     SaveData newSave2("../Saves/save.json");
     WorldMap dormMAP(sf::Vector2u(defTileSize, defTileSize), newSave2.getDormConfig());
@@ -21,6 +22,8 @@ int main() {
     Player* player = newSave2.getPlayerPtr();
     //gameplayView.move(sf::Vector2f(
     //    player->getAvatarPtr()->getPosition().x , player->getAvatarPtr()->getPosition().y));
+
+    std::chrono::steady_clock::time_point gameBegin = std::chrono::steady_clock::now();
 
     while (window.isOpen()) {
         // getting timestamp
@@ -91,6 +94,12 @@ int main() {
         sf::Vector2i(player->getAvatarPtr()->getTexture()->getSize().x, player->getAvatarPtr()->getTexture()->getSize().y));
     enums::movableObject closestObject = dormMAP.getClosestObject(playerRect);
     player->use(closestObject);
+
+    std::chrono::steady_clock::time_point gameEnd = std::chrono::steady_clock::now();
+    if (std::chrono::duration_cast<std::chrono::minutes>(gameEnd - gameBegin).count() >= 2) {
+        player->evaluateEvery2min();
+        gameBegin = std::chrono::steady_clock::now();
+    }
 
     window.clear();
     window.setView(gameplayView);

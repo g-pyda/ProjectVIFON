@@ -5,8 +5,10 @@
 static constexpr unsigned int MAXwidth = 300;
 static constexpr unsigned int MAXheight = 300;
 
-static constexpr unsigned int windowWidth = 1024;
-static constexpr unsigned int windowHeight = 640;
+static constexpr unsigned int gameplayWidth = 1024;
+static constexpr unsigned int gameplayHeight = 1024;
+static constexpr unsigned int windowWidth = 1900;
+static constexpr unsigned int windowHeight = 1000;
 static constexpr unsigned int defTileSize = 32;
 
 namespace enums {
