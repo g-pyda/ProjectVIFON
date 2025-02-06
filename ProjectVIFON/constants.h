@@ -8,7 +8,7 @@ static constexpr unsigned int MAXheight = 300;
 static constexpr unsigned int gameplayWidth = 1024;
 static constexpr unsigned int gameplayHeight = 1024;
 static constexpr unsigned int windowWidth = 1900;
-static constexpr unsigned int windowHeight = 1000;
+static constexpr unsigned int windowHeight = 1024;
 static constexpr unsigned int defTileSize = 32;
 
 namespace enums {
@@ -53,6 +53,14 @@ namespace enums {
 	
 	static enum map {
 		start, dorm, outdoor, hipermarket, uni
+	};
+
+	static enum gameStates {
+		gamePaused, gameIsRunning, viewMoving
+	};
+
+	static enum playerStates {
+		collisionTop, collisionBottom, collisionRight, collisionLeft, movingTop, movingBottom, movingLeft, movingRight, encounteredObject, encounteredPerson
 	};
 };
 

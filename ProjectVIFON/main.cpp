@@ -1,113 +1,56 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "chrono"
+#include <array>
+#include <thread>
+#include <mutex>
+#include <chrono>
 #include "Config.h"
 #include "dormTEX.h"
 #include "WorldMap.h"
 #include "constants.h"
 #include "SaveData.h"
-
+#include "GameEngine.h"
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(windowWidth,windowHeight), "Texture generating testing!");
-    window.setFramerateLimit(0u);
-    window.setVerticalSyncEnabled(false);
-    sf::Texture dormTEX;
-    sf::View gameplayView(sf::FloatRect(0, 0, gameplayWidth, gameplayHeight));
-    gameplayView.setViewport(sf::FloatRect(0, 0, (double)gameplayWidth / windowWidth, (double)gameplayHeight / windowHeight));
+    // Creating the bool state array for threading handling
+    std::array<bool, 10> gameStates = { false };
+    gameStates[enums::gameIsRunning] = true;
+    std::array<bool, 30> playerStates = { false };
 
-    SaveData newSave2("../Saves/save.json");
-    WorldMap dormMAP(sf::Vector2u(defTileSize, defTileSize), newSave2.getDormConfig());
+    std::mutex mtx;
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Project VIFON");
+    window.setActive(false);
 
-    Player* player = newSave2.getPlayerPtr();
-    //gameplayView.move(sf::Vector2f(
-    //    player->getAvatarPtr()->getPosition().x , player->getAvatarPtr()->getPosition().y));
+    SaveData save("../Saves/save.json");
+    WorldMap map(sf::Vector2u(defTileSize, defTileSize), save.getDormConfig());
 
-    std::chrono::steady_clock::time_point gameBegin = std::chrono::steady_clock::now();
-
-    while (window.isOpen()) {
-        // getting timestamp
-        std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-
-        // calculating  delta time to previous frame
-        long long deltaTime = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
-
-        // move byt offset multiplied by delta time
-        const float vel = 0.001f * deltaTime;
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            gameplayView.move(sf::Vector2f(0, -vel));
-            (player)->move(sf::Vector2f(0, -vel));
-            while (dormMAP.is_colliding_top((player)->getAvatarPtr())) {
-                (player)->move(sf::Vector2f(0, vel));
-                gameplayView.move(sf::Vector2f(0, vel));
-            }
-        }
-       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            gameplayView.move(sf::Vector2f(0, vel));
-            (player)->move(sf::Vector2f(0, vel));
-            while (dormMAP.is_colliding_bottom((player)->getAvatarPtr())) {
-                (player)->move(sf::Vector2f(0, -vel));
-                gameplayView.move(sf::Vector2f(0, -vel));
-            }
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            gameplayView.move(sf::Vector2f(-vel, 0));
-            (player)->move(sf::Vector2f(-vel, 0));
-            while (dormMAP.is_colliding_left((player)->getAvatarPtr())) {
-                (player)->move(sf::Vector2f(vel, 0));
-                gameplayView.move(sf::Vector2f(vel, 0));
-            }
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            gameplayView.move(sf::Vector2f(vel, 0));
-            (player)->move(sf::Vector2f(vel, 0));
-            while (dormMAP.is_colliding_right((player)->getAvatarPtr())) {
-                (player)->move(sf::Vector2f(-vel, 0));
-                gameplayView.move(sf::Vector2f(-vel, 0));
-            }
-        }
+    // Create threads and pass objects by reference
+    std::thread visualisation(ThreadVisualisation, std::ref(gameStates), std::ref(playerStates), std::ref(window), std::ref(save), std::ref(map), std::ref(mtx));
+    std::thread engine(ThreadEngine, std::ref(gameStates), std::ref(playerStates), std::ref(window), std::ref(save), std::ref(map), std::ref(mtx));
+    std::thread keyboardHandler(ThreadKeyboardHandler, std::ref(gameStates), std::ref(playerStates), std::ref(window), std::ref(save), std::ref(map), std::ref(mtx));
+    
+    while (true) {
+        // closing the window
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed) {
+                gameStates[enums::gameIsRunning] = false;
+
+                visualisation.join();
+                engine.join();
+                keyboardHandler.join();
+
+                std::cout << "About to close the window" << std::endl;
+                window.setActive(true);
                 window.close();
+
+                break;
+            }
         }
-    //checking for the additional collisions
-    while (dormMAP.is_colliding_top((player)->getAvatarPtr())) {
-        (player)->move(sf::Vector2f(0, vel));
-        gameplayView.move(sf::Vector2f(0, vel));
-    }
-    while (dormMAP.is_colliding_bottom((player)->getAvatarPtr())) {
-        (player)->move(sf::Vector2f(0, -vel));
-        gameplayView.move(sf::Vector2f(0, -vel));
-    }
-    while (dormMAP.is_colliding_right((player)->getAvatarPtr())) {
-        (player)->move(sf::Vector2f(-vel, 0));
-        gameplayView.move(sf::Vector2f(-vel, 0));
-    }
-    while (dormMAP.is_colliding_left((player)->getAvatarPtr())) {
-        (player)->move(sf::Vector2f(vel, 0));
-        gameplayView.move(sf::Vector2f(vel, 0));
-    }
-    sf::IntRect playerRect = sf::IntRect(sf::Vector2i(player->getAvatarPtr()->getPosition().x, player->getAvatarPtr()->getPosition().y), 
-        sf::Vector2i(player->getAvatarPtr()->getTexture()->getSize().x, player->getAvatarPtr()->getTexture()->getSize().y));
-    enums::movableObject closestObject = dormMAP.getClosestObject(playerRect);
-    player->use(closestObject);
-
-    std::chrono::steady_clock::time_point gameEnd = std::chrono::steady_clock::now();
-    if (std::chrono::duration_cast<std::chrono::minutes>(gameEnd - gameBegin).count() >= 2) {
-        player->evaluateEvery2min();
-        gameBegin = std::chrono::steady_clock::now();
     }
 
-    window.clear();
-    window.setView(gameplayView);
-    window.draw(dormMAP);
-    window.draw(*player->getAvatarPtr());
-    window.display();
-        
-    }
+    
+
 
     return 0;
 }

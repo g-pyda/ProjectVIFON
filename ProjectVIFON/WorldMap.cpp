@@ -272,7 +272,7 @@ enums::movableObject WorldMap::getClosestObject(sf::IntRect plRect) {
 
     for (auto& object : movableObjects) {
         // get the objects rectangle
-        sf::IntRect objRect = sf::IntRect(object.getPosition().x - 10, object.getPosition().y - 10, object.getSize().x + 10, object.getSize().y + 10);
+        sf::IntRect objRect = sf::IntRect(object.getPosition().x - 10, object.getPosition().y - 10, object.getSize().x + 20, object.getSize().y + 20);
 
         // Update the closest object if this one is closer
         if (objRect.intersects(plRect)) {

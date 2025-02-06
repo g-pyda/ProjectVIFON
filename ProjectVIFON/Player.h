@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <array>
 #include <SFML/Graphics.hpp>
 #include "constants.h"
 #include "Food.h"
@@ -9,6 +10,8 @@
 
 class Player {
 private:
+	// -------------------- SAVE-READ DATA ---------------------------- // 
+	
 	// overal info
 	std::string nickname;
 	enums::fieldOfStudy field;
@@ -37,8 +40,6 @@ private:
 
 	//manipulation over player needs
 	void eat(int hunger, int thirst, int energy);
-	
-
 
 public:
 	//constructors
@@ -49,6 +50,8 @@ public:
 	void operator=(const Player& another);
 	//method to give pointer to player's avatar used in accessing outside the SaveData class
 	sf::Sprite* getAvatarPtr();
+	//method to show the players stats
+	std::array<int, 8> getNeeds() const;
 
 	//method to move the player's sprite
 	void move(sf::Vector2f offset);
@@ -57,7 +60,15 @@ public:
 	//---usage is specified by the object type
 	void use(enums::movableObject object);
 
+	//method evaluating the life cycle of the player - eating, sleeping etc.
 	void evaluateEvery2min();
+
+	// ---------------------- GAMEPLAY USE ONLY ------------------------------- //
+	float vel = 0;
+
+	// method to give pointer to the players velocity
+	float* getVelocityPtr();
+
 	
 };
 

@@ -64,8 +64,22 @@ void Player::operator=(const Player& another) {
 	this->avatar.setTexture(texture);
 }
 
-sf::Sprite* Player::getAvatarPtr() {
+sf::Sprite* Player::getAvatarPtr(){
 	return &(this->avatar);
+}
+
+std::array<int, 8> Player::getNeeds() const {
+	std::array<int, 8> result = {
+		this->NDphysicalHlth,
+		this->NDmentalHlth,
+		this->NDhunger,
+		this->NDthirst,
+		this->NDtoilet,
+		this->NDhygene,
+		this->NDenergy,
+		this->NDentertainment
+	};
+	return result;
 }
 
 void Player::move(sf::Vector2f offset) {
@@ -126,17 +140,25 @@ void Player::evaluateEvery2min() {
 	this->NDhunger -= 5;
 	if (this->NDhunger < 30)
 		this->NDphysicalHlth -= 1;
-	else if (this->NDhunger < 10)
+	else if (this->NDhunger < 10) {
 		this->NDphysicalHlth -= 3;
+		this->NDmentalHlth -= 1;
+	}
+	if (this->NDhunger < 0)
+		this->NDhunger = 0;
 
 	this->NDthirst -= 5;
 	if (this->NDthirst < 30)
 		this->NDphysicalHlth -= 2;
-	else if (this->NDthirst < 10)
+	else if (this->NDthirst < 10) {
 		this->NDphysicalHlth -= 4;
+		this->NDmentalHlth -= 1;
+	}
+	if (this->NDthirst < 0)
+		this->NDthirst = 0;
 
 	this->NDtoilet -= 5;
-	if (this->NDhunger <= 0) {
+	if (this->NDtoilet <= 0) {
 		this->NDtoilet = 100;
 		this->NDhygene = 0;
 	}
@@ -146,16 +168,34 @@ void Player::evaluateEvery2min() {
 		this->NDphysicalHlth -= 1;
 	else if (this->NDhygene < 10)
 		this->NDphysicalHlth -= 3;
+	if (this->NDhygene < 0)
+		this->NDhygene = 0;
 
 	this->NDenergy -= 5;
-	if (this->NDenergy < 15)
+	if (this->NDenergy < 15) {
 		this->NDphysicalHlth -= 1;
-	else if (this->NDhygene <= 0)
+		this->NDmentalHlth -= 1;
+	}
+	if (this->NDenergy <= 0) {
 		this->NDphysicalHlth -= 15;
+		this->NDenergy = 100;
+	}
 
 	this->NDentertainment -= 5;
 	if (this->NDentertainment < 30)
 		this->NDmentalHlth -= 1;
 	else if (this->NDentertainment < 10)
 		this->NDmentalHlth -= 3;
+	if (this->NDentertainment <= 0)
+		this->NDentertainment = 0;
+
+	if (this->NDmentalHlth <= 0)
+		this->NDmentalHlth = 0;
+
+	if (this->NDphysicalHlth <= 0)
+		this->NDphysicalHlth = 0;
+}
+
+float* Player::getVelocityPtr() {
+	return &this->vel;
 }
