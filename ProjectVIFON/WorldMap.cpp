@@ -264,20 +264,19 @@ bool WorldMap::is_colliding_bottom(sf::Sprite* sprite) {
 }
 
 //method to check, which world object is the closest one to the Player
-enums::movableObject WorldMap::getClosestObject(sf::IntRect plRect) {
-    enums::movableObject result = enums::movableObject::none;
-
-    // ---------------- change the logic to the interaction field
-    sf::IntRect interactionRect = sf::IntRect(plRect.left + 70, plRect.top + 70, plRect.width + 140, plRect.height + 140);
+WorldObject* WorldMap::getClosestObject(sf::IntRect plRect){
+    WorldObject* result = nullptr;
 
     for (auto& object : movableObjects) {
-        // get the objects rectangle
+        // get the objects interaction rectangle
         sf::IntRect objRect = sf::IntRect(object.getPosition().x - 10, object.getPosition().y - 10, object.getSize().x + 20, object.getSize().y + 20);
 
         // Update the closest object if this one is closer
         if (objRect.intersects(plRect)) {
-            result = object.getName();
+            result = &object;
             return result;
         }
     }
+
+    return result;
 }

@@ -38,8 +38,11 @@ private:
 	// owned objects
 	std::vector <Food> ownedFood = {};
 
-	//manipulation over player needs
+	// manipulation over player needs
 	void eat(int hunger, int thirst, int energy);
+
+	// usage of map objects
+	WorldObject* theClosestObject;
 
 public:
 	//constructors
@@ -55,20 +58,19 @@ public:
 
 	//method to move the player's sprite
 	void move(sf::Vector2f offset);
+
+	// ------------------------ USAGE OF MAP OBJECTS -------------------------- //
 	//method to see function of movable object
 	//---show options of usage when Player is close enough
 	//---usage is specified by the object type
 	void use(enums::movableObject object);
 
+	// pointer to the closest object: getter and setter
+	WorldObject* getTheClosestObject() const;
+
+	void setTheClosestObject(WorldObject* newObject);
+
 	//method evaluating the life cycle of the player - eating, sleeping etc.
 	void evaluateEvery2min();
-
-	// ---------------------- GAMEPLAY USE ONLY ------------------------------- //
-	float vel = 0;
-
-	// method to give pointer to the players velocity
-	float* getVelocityPtr();
-
-	
 };
 

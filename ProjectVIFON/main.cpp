@@ -12,7 +12,7 @@
 #include "GameEngine.h"
 
 int main() {
-    // Creating the bool state array for threading handling
+    // creating the bool state array for threading handling
     std::array<bool, 10> gameStates = { false };
     gameStates[enums::gameIsRunning] = true;
     std::array<bool, 30> playerStates = { false };
@@ -24,7 +24,7 @@ int main() {
     SaveData save("../Saves/save.json");
     WorldMap map(sf::Vector2u(defTileSize, defTileSize), save.getDormConfig());
 
-    // Create threads and pass objects by reference
+    // creating threads and pass objects by reference
     std::thread visualisation(ThreadVisualisation, std::ref(gameStates), std::ref(playerStates), std::ref(window), std::ref(save), std::ref(map), std::ref(mtx));
     std::thread engine(ThreadEngine, std::ref(gameStates), std::ref(playerStates), std::ref(window), std::ref(save), std::ref(map), std::ref(mtx));
     std::thread keyboardHandler(ThreadKeyboardHandler, std::ref(gameStates), std::ref(playerStates), std::ref(window), std::ref(save), std::ref(map), std::ref(mtx));
@@ -40,13 +40,18 @@ int main() {
                 engine.join();
                 keyboardHandler.join();
 
-                std::cout << "About to close the window" << std::endl;
                 window.setActive(true);
                 window.close();
 
                 break;
             }
+            else if (event.type == sf::Event::KeyReleased)
+                gameStates[enums::singleKeyReleased] = true;
+            else if (gameStates[enums::singleKeyReleased] && event.type == sf::Event::KeyPressed)
+                gameStates[enums::singleKeyReleased] = false;
         }
+        if (!gameStates[enums::gameIsRunning])
+            break;
     }
 
     

@@ -136,6 +136,14 @@ void Player::eat(int hunger, int thirst, int energy) {
 	this->NDenergy += energy;
 }
 
+WorldObject* Player::getTheClosestObject() const{
+	return this->theClosestObject;
+}
+
+void Player::setTheClosestObject(WorldObject* newObject) {
+	this->theClosestObject = newObject;
+}
+
 void Player::evaluateEvery2min() {
 	this->NDhunger -= 5;
 	if (this->NDhunger < 30)
@@ -194,8 +202,4 @@ void Player::evaluateEvery2min() {
 
 	if (this->NDphysicalHlth <= 0)
 		this->NDphysicalHlth = 0;
-}
-
-float* Player::getVelocityPtr() {
-	return &this->vel;
 }

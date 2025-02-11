@@ -5,7 +5,7 @@
 #include "constants.h"
 
 class WorldObject {
-private:
+protected:
 	// name of the object
 	enums::movableObject name;
 	// pointer to the triangles rendered on the world map

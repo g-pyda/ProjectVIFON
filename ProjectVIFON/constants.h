@@ -56,7 +56,7 @@ namespace enums {
 	};
 
 	static enum gameStates {
-		gamePaused, gameIsRunning, viewMoving
+		gamePaused, gameIsRunning, viewMoving, gameMenu, singleKeyReleased
 	};
 
 	static enum playerStates {
@@ -84,5 +84,4 @@ namespace const_config {
 	};
 }
 
-static bool isPaused = false;
 static enums::map whichMap = enums::map::dorm;
